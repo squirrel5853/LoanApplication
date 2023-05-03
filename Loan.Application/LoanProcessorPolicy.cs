@@ -1,11 +1,11 @@
 ﻿namespace Loan.Application
 {
-    public abstract class LoanProcessorSpecification
+    public abstract class LoanProcessorPolicy
     {
         public abstract LoanProcessorValidationResult ValidateLTV(decimal loanToValue, int creditScore);
     }
 
-    public class LoanRejectProcessorSpecification : LoanProcessorSpecification
+    public class LoanRejectProcessorPolicy : LoanProcessorPolicy
     {
         public override LoanProcessorValidationResult ValidateLTV(decimal loanToValue, int creditScore)
         {
@@ -13,7 +13,7 @@
         }
     }
 
-    public class HighValueLoanProcessorSpecification : LoanProcessorSpecification
+    public class HighValueLoanProcessorPolicy : LoanProcessorPolicy
     {
         public override LoanProcessorValidationResult ValidateLTV(decimal loanToValue, int creditScore)
         {
@@ -26,7 +26,7 @@
         }
     }
 
-    public class NormalLoanProcessorSpecification : LoanProcessorSpecification
+    public class NormalLoanProcessorPolicy : LoanProcessorPolicy
     {
         public override LoanProcessorValidationResult ValidateLTV(decimal loanToValue, int creditScore)
         {

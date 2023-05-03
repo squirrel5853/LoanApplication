@@ -8,7 +8,7 @@ namespace Loan.Application.Tests
         }
 
         [Test]
-        public void LoanProcessor_GetLoanProcessorSpecification_ReturnsExpectedSpecification()
+        public void LoanProcessor_GetLoanProcessorPolicy_ReturnsExpectedPolicy()
         {
             Assert.Pass();
         }

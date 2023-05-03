@@ -10,34 +10,34 @@ namespace Loan.Application
 
         public LoanApplicationResult ProcessLoanApplication(LoanApplication loanApplication)
         {
-            LoanProcessorSpecification loanProcessorSpecification = GetLoanProcessorSpecification(loanApplication.LoanAmount);
+            LoanProcessorPolicy loanProcessorPolicy = GetLoanProcessorPolicy(loanApplication.LoanAmount);
 
-            var result = ValidateApplication(loanApplication, loanProcessorSpecification);
+            var result = ValidateApplication(loanApplication, loanProcessorPolicy);
 
             return result;
         }
 
-        private LoanProcessorSpecification GetLoanProcessorSpecification(decimal loanAmount)
+        private LoanProcessorPolicy GetLoanProcessorPolicy(decimal loanAmount)
         {
             if (loanAmount > OneMillionFiveHundredThousand || loanAmount < OneHundredThousand)
             {
-                return new LoanRejectProcessorSpecification();
+                return new LoanRejectProcessorPolicy();
             }
             if (loanAmount > OneMillion)
             {
-                return new HighValueLoanProcessorSpecification();
+                return new HighValueLoanProcessorPolicy();
             }
             else
             {
-                return new NormalLoanProcessorSpecification();
+                return new NormalLoanProcessorPolicy();
             }
         }
 
-        private LoanApplicationResult ValidateApplication(LoanApplication loanApplication, LoanProcessorSpecification loanProcessorSpecification)
+        private LoanApplicationResult ValidateApplication(LoanApplication loanApplication, LoanProcessorPolicy loanProcessorPolicy)
         {
             LoanApplicationResult result = new LoanApplicationResult(loanApplication.LoanApplicant.Id, loanApplication.Id);
 
-            var ltvValidationResult = loanProcessorSpecification.ValidateLTV(loanApplication.LTV, loanApplication.LoanApplicant.CreditScore);
+            var ltvValidationResult = loanProcessorPolicy.ValidateLTV(loanApplication.LTV, loanApplication.LoanApplicant.CreditScore);
 
             result.ApplicationApproved = ltvValidationResult.Success;
 
